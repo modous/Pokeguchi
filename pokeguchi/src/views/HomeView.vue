@@ -23,11 +23,14 @@
         <CreatureDisplay />
 
         <div class="mt-4 grid grid-cols-2 gap-3 text-sm text-gray-300">
+          <p>🧠 Intelligence: {{ creatureStore.intelligence }}</p>
           <p>💪 Strength: {{ creature.strength }}</p>
           <p>😊 Happiness: {{ creature.happiness }}</p>
           <p>🍗 Hunger: {{ creature.hunger }}</p>
           <p>✨ Evolution: {{ creature.evolution_stage }}</p>
         </div>
+
+        <XPBar />
 
         <!-- 🗑️ Release button -->
         <button
@@ -47,6 +50,7 @@ import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/auth'
 import { useCreatureStore } from '@/stores/creature'
 import CreatureDisplay from '@/components/CreatureDisplay.vue'
+import XPBar from '@/components/XPBar.vue'
 
 interface Creature {
   id: string
@@ -84,6 +88,7 @@ onMounted(async () => {
   const { data } = await supabase.from('creatures').select('*').eq('user_id', auth.user.id).single()
   creature.value = data
   if (data) creatureStore.loadFromDb(data)
+  creatureStore.startLifecycle()
   loading.value = false
 })
 
@@ -126,6 +131,7 @@ async function hatchEgg(): Promise<void> {
     if (error) throw error
     creature.value = data
     creatureStore.loadFromDb(data)
+    creatureStore.startLifecycle()
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error('Hatch error:', err)

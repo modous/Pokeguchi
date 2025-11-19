@@ -12,6 +12,8 @@
       <p>{{ creature.moodDescription }}</p>
     </div>
 
+    <XPBar />
+
     <div class="flex justify-center space-x-4">
       <button @click="creature.feed()" class="bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded">
         Feed 🍖
@@ -29,6 +31,7 @@
 <script setup lang="ts">
 import { useCreatureStore } from '@/stores/creature'
 import CreatureDisplay from '@/components/CreatureDisplay.vue'
+import XPBar from '@/components/XPBar.vue'
 const creature = useCreatureStore()
 </script>
 

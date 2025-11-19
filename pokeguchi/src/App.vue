@@ -20,6 +20,9 @@
         <RouterLink v-if="auth.user" to="/about" class="hover:text-pink-300 transition"
           >About</RouterLink
         >
+        <RouterLink v-if="auth.user" to="/inventory" class="hover:text-pink-300 transition"
+          >Inventory</RouterLink
+        >
 
         <!-- Only show login/register if not logged in -->
         <RouterLink v-if="!auth.user" to="/auth" class="hover:text-pink-300 transition">
